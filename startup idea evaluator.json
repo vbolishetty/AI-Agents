@@ -1,0 +1,147 @@
+{
+  "name": "startup idea evaluator",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "99bc3c8e-1fd8-4c3e-87ef-9ba92548a3d7",
+      "name": "When chat message received",
+      "webhookId": "af688a47-b22b-420f-9e19-4d54147952f1"
+    },
+    {
+      "parameters": {
+        "options": {
+          "maxOutputTokens": 2048
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        80,
+        208
+      ],
+      "id": "ea7c92b4-c0bb-49fd-8b60-45049aad7eec",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "NsF5Ijr2Odcoyrav",
+          "name": "VB Google Gemini(PaLM) - 02-77-2026"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        224,
+        208
+      ],
+      "id": "e9e48387-2e08-41bd-9efb-cbec12e0235d",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "query": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Query', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-gemini-search.geminiSearchToolTool",
+      "typeVersion": 1,
+      "position": [
+        368,
+        208
+      ],
+      "id": "66aef907-5e75-4e90-8410-5a33effff83c",
+      "name": "Gemini Search Tool",
+      "credentials": {
+        "geminiSearchApi": {
+          "id": "hG45boO2pkBR39WV",
+          "name": "Gemini Credentials account 116"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "1. Clarify the Idea\n\nBriefly restate the startup concept in 2 to 3 sentences.\nIdentify the core problem being solved and the proposed solution.\n\n2. Define Target Demographic\n\nIdentify:\n\nAge range\n\nIncome level\n\nIndustry or user type\n\nGeography\n\nBehavioral traits\n\nBuying power\n\nExplain why this demographic would realistically pay for the solution.\n\n3. Market Size Analysis\n\nYou must estimate:\n\nTAM. Total Addressable Market\n\nDefine the entire market demand for this type of solution globally or regionally.\nEstimate using either:\n\nTop down method. Industry size reports\n\nBottom up method. Users × price\n\nShow calculation steps clearly.\n\nSAM. Serviceable Available Market\n\nNarrow the TAM to the specific segment the startup can realistically serve based on:\n\nGeography\n\nDistribution limitations\n\nNiche focus\n\nShow calculation logic.\n\nSOM. Serviceable Obtainable Market\n\nEstimate realistic capture within first 3 years.\nAssume reasonable market penetration percentage based on:\n\nCompetition\n\nMarketing budget constraints\n\nEarly stage startup limitations\n\nProvide percentage assumption and reasoning.\nCalculate expected revenue potential from SOM.\n\n4. Market Conditions\n\nEvaluate:\n\nCompetition intensity\n\nMarket saturation\n\nEntry barriers\n\nRegulatory risks\n\nTechnology dependency\n\nCustomer acquisition difficulty\n\nBe critical. Do not assume ideal conditions.\n\n5. User Behavior Analysis\n\nAssess:\n\nWill users change behavior easily\n\nSwitching costs\n\nFrequency of usage\n\nUrgency of the problem\n\nPrice sensitivity\n\nExplain realistic adoption friction.\n\n6. Unit Economics Sanity Check\n\nIf pricing is provided:\nEstimate:\n\nRevenue per user\n\nPossible acquisition cost range\n\nGross margin potential\n\nIf pricing is not provided, propose a reasonable pricing model and justify it.\n\n7. Risk Assessment\n\nList top 5 risks ranked by severity.\nSeparate:\n\nMarket risk\n\nProduct risk\n\nExecution risk\n\nFinancial risk\n\n8. Final Verdict\n\nReturn a structured conclusion with:\n\nFeasibility Score. 1 to 10\n\nCapital Intensity Level. Low / Medium / High\n\nTime to Traction Estimate\n\nInvestor Attractiveness. Low / Moderate / High\n\nOne sentence brutal truth\n\nOUTPUT FORMAT\n\nReturn your response using this structure:\n\nIdea Summary\n\nTarget Demographic\n\nTAM Calculation\n\nSAM Calculation\n\nSOM Calculation\n\nMarket Conditions\n\nUser Behavior\n\nUnit Economics\n\nRisk Analysis\n\nFinal Verdict\n\nAll calculations must be shown clearly.\nAll assumptions must be labeled.\nBe analytical, not motivational.\nIf numbers are unrealistic, state that clearly."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "41e11bd1-9b1b-4227-9795-9911750f84a9",
+      "name": "Startup Agent"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Startup Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Startup Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Startup Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gemini Search Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "Startup Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "9b1d43a8-dc34-4ca3-b2b2-068173a0a457",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "966c9717c649ff58138114ad4ec0792ba6c6dbbaefbc75a95d7e5ed34f041958"
+  },
+  "id": "mff5A_F8aNakBZ9oSj2-S",
+  "tags": []
+}
