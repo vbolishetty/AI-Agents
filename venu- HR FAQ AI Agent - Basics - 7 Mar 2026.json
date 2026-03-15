@@ -1,0 +1,245 @@
+{
+  "name": "venu- HR FAQ AI Agent - Basics - 7 Mar 2026",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        464,
+        32
+      ],
+      "id": "80830ec7-284b-4d27-acea-c6fa97de2ae3",
+      "name": "When chat message received",
+      "webhookId": "2565fa07-b005-4dd2-a508-0994fed1f926"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        544,
+        240
+      ],
+      "id": "1b92e972-5cbf-4c9d-918c-8f9c8a3d56ae",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "NsF5Ijr2Odcoyrav",
+          "name": "VB Google Gemini(PaLM) - 02-77-2026"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        704,
+        240
+      ],
+      "id": "b1f0f937-18b9-4a71-85f4-19823c81e704",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are an HR Support Assistant responsible for answering employee questions related to company HR policies.\n\nYour role is to provide accurate, short, and clear answers by referring only to the available knowledge tools connected to you.\n\nAvailable Knowledge Tools\n\nYou have access to the following tools:\n\nLeave & Attendance → Contains information about leave policies, attendance rules, work-from-home policy, and leave application processes.\n\nPayroll & Compensation → Contains information about salary payments, payslips, reimbursements, bonuses, and tax documents.\n\nEmployee Benefits & Policies → Contains information about health insurance, provident fund, company policies, learning programs, and exit procedures.\n\nInstructions\n\nFollow these rules when answering questions:\n\nAlways search the appropriate tool first before answering a question.\n\nChoose the tool based on the category of the employee’s question:\n\nLeave or attendance related → Leave & Attendance\n\nSalary, payslip, reimbursements, tax, bonus → Payroll & Compensation\n\nInsurance, PF, company rules, ID cards, exit process → Employee Benefits & Policies\n\nUse only the information returned from the tool to answer the question.\n\nDo not invent or assume information.\n\nKeep responses short, clear, and helpful (1–2 sentences if possible).\n\nIf the answer cannot be found in the knowledge base, respond with:\n\n“I'm sorry, I cannot answer this question because the information is not available in my HR knowledge base.”\n\nIf the question is unrelated to HR policies, politely respond:\n\n“I can only assist with HR-related questions such as leave, payroll, benefits, and company policies.”\n\nResponse Style\n\nProfessional and friendly\n\nClear and concise\n\nAvoid long explanations\n\nYour goal is to help employees quickly find HR policy information using the provided knowledge sources only."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        672,
+        32
+      ],
+      "id": "616e6fa6-3e53-4482-8542-b130ebf11005",
+      "name": "HR FAQ AI Agent"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1JtA2ZNyB76FMyJ14rswkKrm3UQ1LucJype33vQOKoRU",
+          "mode": "list",
+          "cachedResultName": "VENU- HR - 20260308 - E-commerce FAQs - V2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1JtA2ZNyB76FMyJ14rswkKrm3UQ1LucJype33vQOKoRU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Leave & Attendance",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1JtA2ZNyB76FMyJ14rswkKrm3UQ1LucJype33vQOKoRU/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        864,
+        256
+      ],
+      "id": "55ef1833-606d-4010-ab16-2063922a64cf",
+      "name": "Leave & Attendance",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "L7gqc5JkoUq6EVrs",
+          "name": "VB Google Sheets-02-07-2026"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1JtA2ZNyB76FMyJ14rswkKrm3UQ1LucJype33vQOKoRU",
+          "mode": "list",
+          "cachedResultName": "VENU- HR - 20260308 - E-commerce FAQs - V2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1JtA2ZNyB76FMyJ14rswkKrm3UQ1LucJype33vQOKoRU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 913830329,
+          "mode": "list",
+          "cachedResultName": "Payroll & Compensation",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1JtA2ZNyB76FMyJ14rswkKrm3UQ1LucJype33vQOKoRU/edit#gid=913830329"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        1040,
+        256
+      ],
+      "id": "b28618be-7272-40a4-a2dd-5dca050b61d1",
+      "name": "Payroll & Compensation",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "L7gqc5JkoUq6EVrs",
+          "name": "VB Google Sheets-02-07-2026"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1JtA2ZNyB76FMyJ14rswkKrm3UQ1LucJype33vQOKoRU",
+          "mode": "list",
+          "cachedResultName": "VENU- HR - 20260308 - E-commerce FAQs - V2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1JtA2ZNyB76FMyJ14rswkKrm3UQ1LucJype33vQOKoRU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 62131865,
+          "mode": "list",
+          "cachedResultName": "Employee Benefits & Policies",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1JtA2ZNyB76FMyJ14rswkKrm3UQ1LucJype33vQOKoRU/edit#gid=62131865"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        1200,
+        256
+      ],
+      "id": "46d9278e-657a-4e7b-9976-61df6f5d682c",
+      "name": "Employee Benefits & Policies",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "L7gqc5JkoUq6EVrs",
+          "name": "VB Google Sheets-02-07-2026"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "HR FAQ AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "HR FAQ AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "HR FAQ AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leave & Attendance": {
+      "ai_tool": [
+        [
+          {
+            "node": "HR FAQ AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Payroll & Compensation": {
+      "ai_tool": [
+        [
+          {
+            "node": "HR FAQ AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Employee Benefits & Policies": {
+      "ai_tool": [
+        [
+          {
+            "node": "HR FAQ AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "193ba0c7-faab-40b6-95b3-e172bb77d6ba",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "966c9717c649ff58138114ad4ec0792ba6c6dbbaefbc75a95d7e5ed34f041958"
+  },
+  "id": "O0jIVhPDJBc8ZwQr",
+  "tags": []
+}

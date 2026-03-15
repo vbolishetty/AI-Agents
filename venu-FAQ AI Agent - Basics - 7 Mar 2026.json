@@ -1,0 +1,273 @@
+{
+  "name": "venu-FAQ AI Agent - Basics - 7 Mar 2026",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        464,
+        32
+      ],
+      "id": "e3949309-efcb-430f-b0e2-62618a752199",
+      "name": "When chat message received",
+      "webhookId": "2dbf44a9-70fa-4286-bd3d-7a1a613fc3e0"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        544,
+        240
+      ],
+      "id": "8380c84e-6916-4dc2-9971-9bd2f34bef68",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "NsF5Ijr2Odcoyrav",
+          "name": "VB Google Gemini(PaLM) - 02-77-2026"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        704,
+        240
+      ],
+      "id": "a61e8e70-9385-4410-a771-afaeaa3cf16e",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "content": "## Google Sheet \nPlease make a copy of this google sheet - [20251109 - E-commerce FAQs - V2](https://docs.google.com/spreadsheets/d/1c4UcQvL4GcXrnOA09WoDcWafTBtnl62pHfoRFQuy5fA/edit?gid=0#gid=0)",
+        "width": 368
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1,
+      "id": "e72da78c-c4d2-4bea-bc60-d95217a34ef7",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Questions to ask \n1) What is the return policy?\n2) Do you have earbuds?\n3) How to get in touch?",
+        "width": 368
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        176
+      ],
+      "typeVersion": 1,
+      "id": "8eefa96c-bbed-4bd8-b42c-b93bb50d9753",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "AI Agent Prompt (Updated for the Provided Products)\nYou are a customer support AI agent for TechSmart, an e-commerce company.\nTechSmart sells the following products:\nClassic Cotton Tee (Category: Apparel)\nAthleisure Joggers (Category: Apparel)\nWireless Earbuds (Category: Electronics)\nYour role is to help customers by answering questions using the available knowledge bases.\nKnowledge Sources\n1. Policy Knowledge Base\nUse this knowledge base for questions related to:\nReturn policy\nRefund policy\nExchange or replacement policy\nWarranty terms\nShipping policies\nOrder cancellation\nAny policy-related examples or scenarios\n2. Product Knowledge Base\nUse this knowledge base for questions related to:\nClassic Cotton Tee\nAthleisure Joggers\nWireless Earbuds\nProduct features\nSpecifications\nCategories\nGeneral product details\nRules\nAlways search the relevant knowledge base before answering.\nIf the question is about returns, refunds, shipping, warranty, or policies, use the Policy Knowledge Base.\nIf the question is about product details, use the Product Knowledge Base.\nDo not invent information that is not present in the knowledge base.\nIf the answer cannot be found in the knowledge base, respond with:\n\"I'm sorry, I cannot answer this question as I don't have that information in my knowledge base.\"\nResponse Style\nBe helpful, clear, and concise.\nAnswer only what the customer asked.\nDo not mention internal knowledge bases or systems in your responses."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        672,
+        32
+      ],
+      "id": "cacc379f-86b8-4529-b590-83d4aef379c2",
+      "name": "FAQ AI Agent"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1no1FkdTZE28N5DaRwnz_9B7sQ05pop_jOdXupSeVaNE",
+          "mode": "list",
+          "cachedResultName": "VENU- 20251109 - E-commerce FAQs - V2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1no1FkdTZE28N5DaRwnz_9B7sQ05pop_jOdXupSeVaNE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Policies_Terms",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1no1FkdTZE28N5DaRwnz_9B7sQ05pop_jOdXupSeVaNE/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        832,
+        240
+      ],
+      "id": "2ebacf2c-f9b2-4738-a8e4-67296fc63bc8",
+      "name": "Policies_Terms",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "L7gqc5JkoUq6EVrs",
+          "name": "VB Google Sheets-02-07-2026"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1no1FkdTZE28N5DaRwnz_9B7sQ05pop_jOdXupSeVaNE",
+          "mode": "list",
+          "cachedResultName": "VENU- 20251109 - E-commerce FAQs - V2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1no1FkdTZE28N5DaRwnz_9B7sQ05pop_jOdXupSeVaNE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 107927771,
+          "mode": "list",
+          "cachedResultName": "Product_Knowledge",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1no1FkdTZE28N5DaRwnz_9B7sQ05pop_jOdXupSeVaNE/edit#gid=107927771"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        976,
+        240
+      ],
+      "id": "b535443e-d5d5-4e7a-8d31-abb686764526",
+      "name": "Product_Knowledge",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "L7gqc5JkoUq6EVrs",
+          "name": "VB Google Sheets-02-07-2026"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1no1FkdTZE28N5DaRwnz_9B7sQ05pop_jOdXupSeVaNE",
+          "mode": "list",
+          "cachedResultName": "VENU- 20251109 - E-commerce FAQs - V2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1no1FkdTZE28N5DaRwnz_9B7sQ05pop_jOdXupSeVaNE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1255456453,
+          "mode": "list",
+          "cachedResultName": "Operations_Contact",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1no1FkdTZE28N5DaRwnz_9B7sQ05pop_jOdXupSeVaNE/edit#gid=1255456453"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        1136,
+        240
+      ],
+      "id": "9661b1e2-7429-4e56-bd00-07fe3c5cbed2",
+      "name": "Operations_Contact",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "L7gqc5JkoUq6EVrs",
+          "name": "VB Google Sheets-02-07-2026"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "FAQ AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "FAQ AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "FAQ AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Policies_Terms": {
+      "ai_tool": [
+        [
+          {
+            "node": "FAQ AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Product_Knowledge": {
+      "ai_tool": [
+        [
+          {
+            "node": "FAQ AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Operations_Contact": {
+      "ai_tool": [
+        [
+          {
+            "node": "FAQ AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "5e9dc678-73f1-427d-8298-c077d3d1bf32",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "966c9717c649ff58138114ad4ec0792ba6c6dbbaefbc75a95d7e5ed34f041958"
+  },
+  "id": "y0pEJmJmNnh9CJi0",
+  "tags": []
+}
